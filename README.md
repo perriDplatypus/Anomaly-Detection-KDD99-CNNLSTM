@@ -7,4 +7,4 @@ KNN: 0.976835
 
 CNN+LSTM: 0.9667878
 
-Ranom Forest: 0.96381378
+Random Forest: 0.96381378
