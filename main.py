@@ -6,8 +6,8 @@ from sklearn.preprocessing import Normalizer
 from keras.models import Sequential
 from keras.layers import Convolution1D, Dense, Dropout, MaxPooling1D, LSTM
 
-x=pd.read_csv('/home/abhay/Major Project/Datasets/test_data.csv')
-y=pd.read_csv('/home/abhay/Major Project/Datasets/test_label.csv')
+x = pd.read_csv('/home/abhay/Major Project/Datasets/test_data.csv')
+y = pd.read_csv('/home/abhay/Major Project/Datasets/test_label.csv')
 
 lstm_output_size = 70
 with open("/home/abhay/Major Project/Pickle/knn.pkl", "rb")as f:
@@ -30,7 +30,7 @@ cnn.add(LSTM(lstm_output_size))
 cnn.add(Dropout(0.1))
 cnn.add(Dense(5, activation="softmax"))
 cnn.load_weights("/home/abhay/Major Project/HDF5/checkpoint-09.hdf5")
-cnn.compile(loss="sparse_categorical_crossentropy", optimizer="SGD", 
+cnn.compile(loss="sparse_categorical_crossentropy", optimizer="SGD",
             metrics=['accuracy'])
 print("Created models and loaded weights from file")
 
@@ -38,7 +38,7 @@ scaler = Normalizer().fit(x)
 X = scaler.transform(x)
 y_test = np.array(y)
 X = np.array(X)
-X_test = np.reshape(X, (X.shape[0],X.shape[1],1))
+X_test = np.reshape(X, (X.shape[0], X.shape[1], 1))
 
 y_knn = knn.predict(x)
 print("KNN Done")
@@ -49,8 +49,8 @@ print("RF Done")
 y_cnn = cnn.predict_classes(X_test)
 print("CNN Done")
 
-pred = np.empty([y_knn.size,1], dtype=int)
-a=0
+pred = np.empty([y_knn.size, 1], dtype=int)
+a = 0
 
 for i in y_knn:
     if i == y_cnn[a]:

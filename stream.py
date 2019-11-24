@@ -13,7 +13,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 top = Tk()
 
 print
-skip = sorted(random.sample(range(2984145),2984145-2000))
+skip = sorted(random.sample(range(2984145), 2984145-2000))
 x = pd.read_csv('D:/Major Project/Datasets/data.csv', skiprows=skip)
 x.sample(frac=1)
 
@@ -26,7 +26,7 @@ with open("D:/Major Project/Pickle/knn.pkl", "rb")as f:
 with open("D:/Major Project/Pickle/RF.pkl", "rb")as f:
     rf = p.load(f)
 
-X_test = np.reshape(X, (X.shape[0],X.shape[1],1))
+X_test = np.reshape(X, (X.shape[0], X.shape[1], 1))
 
 lstm_output_size = 70
 cnn = Sequential()
@@ -40,7 +40,7 @@ cnn.add(LSTM(lstm_output_size))
 cnn.add(Dropout(0.1))
 cnn.add(Dense(5, activation="softmax"))
 cnn.load_weights("D:/Major Project/HDF5/checkpoint-09.hdf5")
-cnn.compile(loss="sparse_categorical_crossentropy", optimizer="SGD", 
+cnn.compile(loss="sparse_categorical_crossentropy", optimizer="SGD",
             metrics=['accuracy'])
 
 c = cnn.predict_classes(X_test)
@@ -52,6 +52,8 @@ print("-----------------Multi Layered IDS------------------------------------")
 print("This project is research based, we pass an unlabeled dataset as a")
 print("datastream into the system, the values shown are the predicted classes")
 print("Index\tClasses")
+
+
 def pred(i):
     global c, k, rf
     if c[i] == k[i]:
@@ -60,25 +62,27 @@ def pred(i):
         pre = rf[i]
     return pre
 
+
 def stream():
-    for i in range(0,len(x)):
+    for i in range(0, len(x)):
         p = pred(i)
         if p == 0:
             #o.insert(END, "Normal\n")
-            print(i,"\tNormal")
+            print(i, "\tNormal")
         elif p == 1:
             #o.insert(END, "DDoS\n")
-            print(i,"\tDDoS")
+            print(i, "\tDDoS")
         elif p == 2:
             #o.insert(END, "Probe\n")
-            print(i,"\tProbe")
-        elif p==3:
+            print(i, "\tProbe")
+        elif p == 3:
             #o.insert(END, "R2L\n")
-            print(i,"\tR2L")
+            print(i, "\tR2L")
         else:
             #o.insert(END, "U2R\n")
-            print(i,"\tU2R")
+            print(i, "\tU2R")
         sleep(0.5)
+
 
 f = Frame(top)
 f.pack()
@@ -86,4 +90,3 @@ top.title("IDS")
 w = Button(f, text="Start", width=25, fg='green', command=stream)
 w.pack()
 top.mainloop()
-        
