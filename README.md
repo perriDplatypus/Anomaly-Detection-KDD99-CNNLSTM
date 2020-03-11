@@ -17,3 +17,6 @@ The main idea was to have 3 different classifier models trained on the same data
  
 ### Author's Note
 This project was done as a capstone project for my undergrad program, so it's not the implementation, but I will link the research paper in the readme once it gets published. Hope it helps.
+
+### Research Link
+https://link.springer.com/chapter/10.1007/978-981-15-0199-9_58
